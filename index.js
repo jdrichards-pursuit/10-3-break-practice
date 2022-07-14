@@ -34,7 +34,9 @@ const characters = require('./data/swapi');
  *
  */
 
-function listAllCharacters() {}
+function listAllCharacters(characters) {
+  return characters.map(item=>item.name);
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
 // console.log(listAllCharacters([]));
@@ -51,10 +53,20 @@ function listAllCharacters() {}
  * No example for this one. You should be able to find the average at this point
  */
 
-function averageHeightOfAllCharacters() {}
+function averageHeightOfAllCharacters(characters) {
+  let total=0;
+  let count=0;
+  for (let x of characters)
+  {
+    total+=Number(x['height']);
+    count++;
+  }
+
+  return typeof total==="number"?total/count:"error";
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-//console.log(averageHeightOfAllCharacters(characters))
+// console.log(averageHeightOfAllCharacters(characters))
 
 /**
  * countByEyeColor()
@@ -76,7 +88,21 @@ function averageHeightOfAllCharacters() {}
  *
  */
 
-function countByEyeColor() {}
+function countByEyeColor(characters) {
+  let eyeColorObj = {};
+  for(let x of characters)
+  {
+    if(eyeColorObj[x['eye_color']]===undefined)
+    {
+      eyeColorObj[x['eye_color']]=1;
+    }
+    else
+    {
+      eyeColorObj[x['eye_color']]++;
+    }
+  }
+  return Object.keys(eyeColorObj).length===0?'Nothing to check.':eyeColorObj;
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
 // console.log(countByEyeColor([]))
@@ -106,7 +132,17 @@ function countByEyeColor() {}
  *
  */
 
-function getAllCharactersCreatedAfterYear() {}
+function getAllCharactersCreatedAfterYear(characters,date) {
+  let resultArr=[];
+  for(let x of characters)
+  {
+    if(Number(date)>=Number(x['created'].split("-")[0]))
+    {
+      resultArr.push(x['name']);
+    }
+  }
+  return resultArr;
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
 // console.log(getAllCharactersCreatedAfterYear(characters, 2014));
@@ -138,7 +174,22 @@ function getAllCharactersCreatedAfterYear() {}
    }
  */
 
-function getCharactersInMovie() {}
+function getCharactersInMovie(characters,title) {
+  let resultObj = {};
+  
+  for(let x of characters)
+  {
+    for(let y of x['films'])
+    {
+      if(y.toLowerCase()===title.toLowerCase())
+      {
+        resultObj[x['id']]=x['name'];
+        break;
+      }
+    }
+  }
+  return resultObj;
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
 // console.log(getCharactersInMovie(characters, 'return of the jedi'));

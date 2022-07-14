@@ -34,11 +34,16 @@ const characters = require('./data/swapi');
  *
  */
 
-function listAllCharacters() {}
+function listAllCharacters(characters) {
+  if (!characters.length) {
+    return 0;
+  }
+  return characters.map(char => char.name);
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
-// console.log(listAllCharacters([]));
-// console.log(listAllCharacters(characters));
+console.log(listAllCharacters([]));
+console.log(listAllCharacters(characters));
 
 /**
  * averageHeightOfAllCharacters()
@@ -51,10 +56,14 @@ function listAllCharacters() {}
  * No example for this one. You should be able to find the average at this point
  */
 
-function averageHeightOfAllCharacters() {}
+function averageHeightOfAllCharacters(characters) {
+  let avgHeight = 0;
+  characters.forEach(char => avgHeight += parseFloat(char.height));
+  return avgHeight / characters.length;
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-//console.log(averageHeightOfAllCharacters(characters))
+console.log(averageHeightOfAllCharacters(characters))
 
 /**
  * countByEyeColor()
@@ -76,11 +85,24 @@ function averageHeightOfAllCharacters() {}
  *
  */
 
-function countByEyeColor() {}
+function countByEyeColor(characters) {
+  if (!characters.length) {
+    return 'Nothing to check.';
+  }
+  let eyeColors = {};
+  for (let char of characters) {
+    if (eyeColors[char["eye_color"]]) {
+      eyeColors[char["eye_color"]] +=1;
+    } else {
+      eyeColors[char["eye_color"]] = 1;
+    }
+  }
+  return eyeColors;
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
-// console.log(countByEyeColor([]))
-// console.log(countByEyeColor(characters));
+console.log(countByEyeColor([]))
+console.log(countByEyeColor(characters));
 
 /**
  * getAllCharactersCreatedAfterYear()
@@ -106,10 +128,19 @@ function countByEyeColor() {}
  *
  */
 
-function getAllCharactersCreatedAfterYear() {}
+function getAllCharactersCreatedAfterYear(characters, date) {
+  const arr = [];
+  for (let char of characters) {
+    let dateArr = char.created.split("-");
+    if (Number(dateArr[0]) >= date) {
+      arr.push(char.name);
+    }
+  }
+  return arr;
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-// console.log(getAllCharactersCreatedAfterYear(characters, 2014));
+console.log(getAllCharactersCreatedAfterYear(characters, 2014));
 
 /** getCharactersInMovie()
  *  ----------------------
@@ -138,7 +169,20 @@ function getAllCharactersCreatedAfterYear() {}
    }
  */
 
-function getCharactersInMovie() {}
+function getCharactersInMovie(characters, str) {
+  let obj = {}
+  str = str.toLowerCase();
+  for (let char of characters) {
+    for (let i = 0; i < char.films.length; i++) {
+      char.films[i] = char.films[i].toLowerCase()
+      if (char.films[i] === str.toLowerCase()) {
+          obj[char.id] = char.name;
+      }
+    } 
+  }
+  return obj
+}
+
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-// console.log(getCharactersInMovie(characters, 'return of the jedi'));
+console.log(getCharactersInMovie(characters, 'return of the jedi'));

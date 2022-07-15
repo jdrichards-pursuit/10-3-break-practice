@@ -57,9 +57,8 @@ console.log(listAllCharacters(characters));
  */
 
 function averageHeightOfAllCharacters(characters) {
-  let avgHeight = 0;
-  characters.forEach(char => avgHeight += parseFloat(char.height));
-  return avgHeight / characters.length;
+  let avgHeight = characters.reduce((accu, char) => accu += (Number(char.height) / characters.length), 0);
+  return avgHeight;
 }
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION

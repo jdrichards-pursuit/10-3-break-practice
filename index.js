@@ -87,17 +87,14 @@ console.log(averageHeightOfAllCharacters(characters))
 
 function countByEyeColor(characters) {
   if (!characters.length) {
-    return 'Nothing to check.';
-  }
-  let eyeColors = {};
-  for (let char of characters) {
-    if (eyeColors[char["eye_color"]]) {
-      eyeColors[char["eye_color"]] +=1;
-    } else {
-      eyeColors[char["eye_color"]] = 1;
+      return 'Nothing to check.';
     }
-  }
+  let eyeColors = characters.reduce((accu, char) => {
+    accu[char["eye_color"]] ? accu[char["eye_color"]] += 1 : accu[char["eye_color"]] = 1;
+    return accu; 
+  } ,{});
   return eyeColors;
+  
 }
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION

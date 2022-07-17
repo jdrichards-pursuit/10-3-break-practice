@@ -34,7 +34,21 @@ const characters = require('./data/swapi');
  *
  */
 
-function listAllCharacters() {}
+function listAllCharacters(characters) {
+  let array = [];
+
+   if(!characters.length) {
+      return 0;
+    }
+
+  for (let i = 0; i < characters.length; i++) {
+    if(characters.length) {
+      array.push(characters[i].name)
+    }
+   
+  }
+  return array;
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
 // console.log(listAllCharacters([]));
@@ -51,10 +65,26 @@ function listAllCharacters() {}
  * No example for this one. You should be able to find the average at this point
  */
 
-function averageHeightOfAllCharacters() {}
+function averageHeightOfAllCharacters(characters) {
+   let sumOfHeight = 0;
+let arr = [];
+
+   for(let i = 0; i < characters.length; i++) {
+    if(characters[i].height) {
+      arr.push(Number(characters[i].height))
+    }
+   }
+
+console.log(arr)
+for(let number of arr) {
+  sumOfHeight += number;
+}
+return averageHeight = sumOfHeight / arr.length;
+
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-//console.log(averageHeightOfAllCharacters(characters))
+// console.log(averageHeightOfAllCharacters(characters))
 
 /**
  * countByEyeColor()
@@ -76,7 +106,30 @@ function averageHeightOfAllCharacters() {}
  *
  */
 
-function countByEyeColor() {}
+function countByEyeColor(characters) {
+  let arr = []; // declare a variable of empty arr (use 4 later)
+  let obj = {}; // declare a variable of empty obj (use 4 later)
+
+  if (!characters.length) { // conditional if statement, if nothing exist in the characters array 
+    return `Nothing to check`; // return error message
+  }
+
+  for(let i = 0; i < characters.length; i++) { // loop to iterate thru characters arr
+    if (characters[i].eye_color) { // if characters arr at given index includes eye color
+      arr.push(characters[i].eye_color) // thn push the colors in characters eyecolor into empty arr
+    }
+  }
+  // console.log(arr)
+  for(let color of arr) { // loop thru the previous arr created on line 119 to find each eye color
+    if (!obj[color]) { // if no color in the empty obj
+     obj[color] = 1 // add a key value to each color key ... since obj is empty we want to add each color to the empty obj and thn add a value to each color .... =1 because we see only one color
+    } else {
+      obj[color] += 1 // if key value, add 1 more to value ... if we have multi of same color we want to add the number of times we see it to the value
+    }
+
+  }
+return obj // after all colors are found and the number of times found with in the arr has been placed as the value to the key colors, return the final obj
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
 // console.log(countByEyeColor([]))
@@ -106,7 +159,16 @@ function countByEyeColor() {}
  *
  */
 
-function getAllCharactersCreatedAfterYear() {}
+function getAllCharactersCreatedAfterYear(characters, date) {
+  let characterCreated = [] // create empty arr variable
+// console.log(date)
+  for(let creates of characters) { // iterate (loop) through chararcters arr
+    if (Number(creates.created.split("-")[0]) >= date) { // turns the created string into a number after splitting at index 0, than checks to see if said number is greater or equal to the date value given.
+characterCreated.push(creates.name) // pushes the names of all the characters that came up as a truthy to the conditional statement into the empty arr created on line 163
+    }
+  }
+  return characterCreated; // returns the new arr with all characters found on line 167
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
 // console.log(getAllCharactersCreatedAfterYear(characters, 2014));
@@ -138,7 +200,23 @@ function getAllCharactersCreatedAfterYear() {}
    }
  */
 
-function getCharactersInMovie() {}
+function getCharactersInMovie(characters,filmStr) {
+  let nameAndId = {} // created variable for the empty object
+  let str = []; // created a variable for empty arr
+  for (let i = 0; i < characters.length; i++){ // loop through characters length pt.1 of nested loop
+    for (let k = 0; k < characters[i].films.length; k++){ //loop through the characters film length pt.2 nested loop
+      if((characters[i].films[k]).toLowerCase() === filmStr.toLowerCase()) { // this will check characters at given index and film given index and convert findings to lowercase thn compare the lowercased films to the string filmStr given 
+        str.push(characters[i].id) // push the characters id that was found to equal the string given (filmStr) into empty arr
+      }
+    }
+    for(let namesId of str){  // iterate thru the previous arr created on line 209 pt.3 nested loop
+      if (!nameAndId[namesId]){ // if the empty obj has no value
+        nameAndId[namesId] = characters[i].name // created a key and assigned it a value of characters name
+      }
+    }
+  }
+  return nameAndId;
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
 // console.log(getCharactersInMovie(characters, 'return of the jedi'));
